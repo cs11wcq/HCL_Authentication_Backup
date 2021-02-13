@@ -1,0 +1,40 @@
+<div class="roomDetails">
+  <h2>University details</h2>
+  <a class="btn btn-small btn-warning">Add</a>
+  <a class="btn btn-small btn-warning">Delete</a>
+  <table>
+    <tr>
+      <td>University ID:  </td><td>{{student.id}}</td>
+    </tr>
+    <tr>
+      <td>Name: </td><td> {{student.name}}</td>
+    </tr>
+  </table>
+
+  <h4>Students:</h4>
+  <div class="card my-5">
+    <div class="card-body">
+      <table class="table table-bordered table-striped">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Name</th>
+            <th scope="col">University</th>
+            <th scope="col">Degree</th>
+            <th scope = "col"> View Detail</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let student of students">
+            <td>{{ student.id }}</td>
+            <td>{{ student.name }}</td>
+            <td>{{ student.university.name }}</td>
+            <td>{{ student.degree}}</td>
+            <td>
+              <button type="button" class="btn btn-primary"> Edit </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+</div>

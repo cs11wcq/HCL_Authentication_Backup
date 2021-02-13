@@ -1,0 +1,30 @@
+<p></p>
+<div class="p-5 text-left bg-light">
+<h1>Total Students List</h1>
+
+  <div class="card my-5">
+    <div class="card-body">
+      <table class="table table-bordered table-striped">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Name</th>
+            <th scope="col">Graduation Year</th>
+            <th scope = "col"> View Detail</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let student of students">
+            <td>{{ student.id }}</td>
+            <td>{{ student.name }}</td>
+            <td>{{ student.gradYear}}</td>
+            <td>
+              <button type="button" class="btn btn-primary">View Detail </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
