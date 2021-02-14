@@ -35,8 +35,8 @@ public class StudentService {
         return studentRepo.findById(id);
     }
 
-    public void insert(StudentModel university) {
-        studentRepo.save(university);
+    public void insert(StudentModel studentModel) {
+        studentRepo.save(studentModel);
     }
 
     public Long count() {
@@ -47,16 +47,17 @@ public class StudentService {
         studentRepo.deleteById(universityId);
     }
 
+    //returns list of all students attending a particular university
     public List<StudentModel> findByUniversity(UniversityModel uni) {
-        List<StudentModel> it = (List<StudentModel>) studentRepo.findAll();
+        List<StudentModel> students = (List<StudentModel>) studentRepo.findAll();
 
         List<StudentModel> studentsAttending = new ArrayList<StudentModel>();
 
-        it.forEach(e -> {
-            if (!studentsAttending.contains(studentRepo.findByUniversity(uni))) {
-                studentsAttending.add(studentRepo.findByUniversity(uni));
+        for (StudentModel student: students) {
+            if (student.getUniversity().equals(uni)) {
+                studentsAttending.add(student);
             }
-        });
+        }
 
         return studentsAttending;
     }

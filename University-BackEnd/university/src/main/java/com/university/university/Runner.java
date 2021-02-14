@@ -45,6 +45,13 @@ public class Runner implements CommandLineRunner {
         model = new StudentModel("Zaid", "computer science");
         model.setUniversity(u2);
         studentRepo.save(model);
+
+        //added a second student to USC (university with id 2)
+        //this breaks
+        model = new StudentModel("seth", "math");
+        model.setUniversity(u2);
+        studentRepo.save(model);
+
         model = new StudentModel("name3", "deg");
         model.setUniversity(u3);
         studentRepo.save(model);

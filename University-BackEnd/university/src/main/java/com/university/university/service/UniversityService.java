@@ -31,6 +31,7 @@ public class UniversityService {
         return universities;
     }
 
+    //find a university by id
     public Optional<UniversityModel> find(long id) {
         return universityRepo.findById(id);
     }
@@ -46,5 +47,7 @@ public class UniversityService {
     public void deleteById(Long universityId) {
         universityRepo.deleteById(universityId);
     }
+
+    public UniversityModel postUniversity(UniversityModel universityModel) { return universityRepo.save(universityModel);}
 
 }
