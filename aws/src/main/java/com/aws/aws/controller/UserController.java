@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,40 +26,48 @@ public class UserController {
     @Autowired
     private Uservalidator userValidator;
 
-    @GetMapping("/registration")
-    public String registration(Model model) {
-        model.addAttribute("userForm", new UserModel());
+    // @CrossOrigin(origins = "http://localhost:4200")
+    // @GetMapping("/registration")
+    // public String registration(Model model) {
+    // model.addAttribute("userForm", new UserModel());
 
-        return "registration";
-    }
+    // return "registration";
+    // }
 
+    @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping("/registration")
     public String registration(@ModelAttribute("userForm") UserModel userForm, BindingResult bindingResult) {
         userValidator.validate(userForm, bindingResult);
 
         if (bindingResult.hasErrors()) {
-            return "registration";
+            return "error";
         }
 
         userService.addUser(userForm);
 
         securityService.autoLogin(userForm.getUsername(), userForm.getPasswordConfirm());
 
-        return "redirect:/welcome";
+        return "login";
     }
 
+    @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/login")
     public String login(Model model, String error, String logout) {
-        if (error != null)
+        if (error != null) {
             model.addAttribute("error", "Your username and password is invalid.");
+            return "error";
+        }
 
-        if (logout != null)
+        if (logout != null) {
             model.addAttribute("message", "You have been logged out successfully.");
+            return "error";
+        }
 
         return "login";
     }
 
-    @GetMapping({ "/", "/welcome" })
+    @CrossOrigin(origins = "http://localhost:4200")
+    @GetMapping("/")
     public String welcome(Model model) {
         return "welcome";
     }
