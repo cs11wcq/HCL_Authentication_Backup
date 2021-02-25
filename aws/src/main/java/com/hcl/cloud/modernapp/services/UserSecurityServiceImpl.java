@@ -1,4 +1,4 @@
-package com.aws.aws.services;
+package com.hcl.cloud.modernapp.services;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,7 +11,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
 @Service
-public class SecurityServiceImpl implements SecurityService {
+public class UserSecurityServiceImpl implements UserSecurityService {
 
     @Autowired
     private AuthenticationManager authManager;
@@ -19,7 +19,7 @@ public class SecurityServiceImpl implements SecurityService {
     @Autowired
     private UserDetailsService userDetailsService;
 
-    private static final Logger logger = LoggerFactory.getLogger(SecurityServiceImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(UserSecurityServiceImpl.class);
 
     @Override
     public String findLoggedInUsername() {
