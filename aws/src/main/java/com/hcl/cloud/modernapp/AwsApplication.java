@@ -1,4 +1,4 @@
-package com.aws.aws;
+package com.hcl.cloud.modernapp;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

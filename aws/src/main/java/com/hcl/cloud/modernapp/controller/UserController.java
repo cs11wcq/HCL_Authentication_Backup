@@ -1,9 +1,9 @@
-package com.aws.aws.controller;
+package com.hcl.cloud.modernapp.controller;
 
-import com.aws.aws.Validator.Uservalidator;
-import com.aws.aws.model.UserModel;
-import com.aws.aws.services.SecurityService;
-import com.aws.aws.services.UserService;
+import com.hcl.cloud.modernapp.Validator.Uservalidator;
+import com.hcl.cloud.modernapp.model.UserModel;
+import com.hcl.cloud.modernapp.services.UserSecurityService;
+import com.hcl.cloud.modernapp.services.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,7 +18,7 @@ public class UserController {
     private UserService userService;
 
     @Autowired
-    private SecurityService securityService;
+    private UserSecurityService securityService;
 
     @Autowired
     private Uservalidator userValidator;

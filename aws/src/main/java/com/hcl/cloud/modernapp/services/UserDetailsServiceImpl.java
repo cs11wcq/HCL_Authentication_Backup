@@ -1,4 +1,4 @@
-package com.aws.aws.services;
+package com.hcl.cloud.modernapp.services;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,8 +11,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.HashSet;
 import java.util.Set;
 
-import com.aws.aws.Repo.UserRepo;
-import com.aws.aws.model.UserModel;
+import com.hcl.cloud.modernapp.Repo.UserRepo;
+import com.hcl.cloud.modernapp.model.UserModel;
 
 /*
 UserDetailsService interface is used in order to lookup the username, password and GrantedAuthorities 
@@ -22,12 +22,12 @@ This interface provide only one method which implementing class need to implemen
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
     @Autowired
-    private UserRepo userRepository;
+    private UserRepo userRepo;
 
     @Override
     @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String username) {
-        UserModel user = userRepository.findByUsername(username);
+        UserModel user = userRepo.findByUsername(username);
         if (user == null)
             throw new UsernameNotFoundException(username);
 

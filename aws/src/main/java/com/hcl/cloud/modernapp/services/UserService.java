@@ -1,6 +1,6 @@
-package com.aws.aws.services;
+package com.hcl.cloud.modernapp.services;
 
-import com.aws.aws.model.UserModel;
+import com.hcl.cloud.modernapp.model.UserModel;
 
 public interface UserService {
 

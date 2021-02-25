@@ -1,14 +1,17 @@
-package com.aws.aws.Validator;
+package com.hcl.cloud.modernapp.Validator;
 
-import com.aws.aws.model.UserModel;
-import com.aws.aws.services.UserService;
+import com.hcl.cloud.modernapp.model.UserModel;
+import com.hcl.cloud.modernapp.services.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
+@Service
 public class Uservalidator implements Validator {
+
     @Autowired
     private UserService userService;
 

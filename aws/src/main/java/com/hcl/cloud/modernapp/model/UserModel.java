@@ -1,4 +1,4 @@
-package com.aws.aws.model;
+package com.hcl.cloud.modernapp.model;
 
 import javax.persistence.*;
 
