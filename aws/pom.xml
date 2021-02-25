@@ -12,7 +12,7 @@
 	<artifactId>modernapp</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>modernapp</name>
-	<description>Demo project for Spring Boot</description>
+	<description>Modern App Utilities project for Spring Boot</description>
 	<properties>
 		<java.version>11</java.version>
 	</properties>
