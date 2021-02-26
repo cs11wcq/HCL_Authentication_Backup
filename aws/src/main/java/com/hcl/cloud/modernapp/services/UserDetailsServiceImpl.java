@@ -1,5 +1,6 @@
 package com.hcl.cloud.modernapp.services;
 
+import com.hcl.cloud.modernapp.domain.UserEntity;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -27,7 +28,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String username) {
-        UserModel user = userRepo.findByUsername(username);
+        UserEntity user = userRepo.findByUsername(username);
         if (user == null)
             throw new UsernameNotFoundException(username);
 

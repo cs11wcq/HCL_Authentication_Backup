@@ -1,5 +1,6 @@
 package com.hcl.cloud.modernapp.services;
 
+import com.hcl.cloud.modernapp.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -16,12 +17,18 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void save(UserModel user) {
-        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        userRepo.save(user);
+        UserEntity userEntity = new UserEntity();
+        userEntity.setUsername(user.getUsername());
+        userEntity.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        userRepo.save(userEntity);
     }
 
     @Override
     public UserModel findByUsername(String username) {
-        return userRepo.findByUsername(username);
+        UserEntity userEntity = userRepo.findByUsername(username);
+        UserModel userModel = new UserModel();
+        userModel.setUsername(userEntity.getUsername());
+        userModel.setPassword(userEntity.getPassword());
+        return userModel;
     }
 }

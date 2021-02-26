@@ -11,7 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-@Controller
+@RestController
 public class UserController {
 
     @Autowired
@@ -23,22 +23,8 @@ public class UserController {
     @Autowired
     private Uservalidator userValidator;
 
-    // @CrossOrigin(origins = "http://localhost:4200")
-    // @GetMapping("/registration")
-    // public String registration(Model model) {
-    // model.addAttribute("userForm", new UserModel());
-
-    // return "registration";
-    // }
-
-    @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping("/registration")
-    public String registration(@ModelAttribute("userForm") UserModel userForm, BindingResult bindingResult) {
-        userValidator.validate(userForm, bindingResult);
-
-        if (bindingResult.hasErrors()) {
-            return "error";
-        }
+    public String registration(@RequestBody UserModel userForm) {
 
         userService.save(userForm);
 
@@ -47,25 +33,15 @@ public class UserController {
         return "login";
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
+
     @GetMapping("/login")
-    public String login(Model model, String error, String logout) {
-        if (error != null) {
-            model.addAttribute("error", "Your username and password is invalid.");
-            return "error";
-        }
-
-        if (logout != null) {
-            model.addAttribute("message", "You have been logged out successfully.");
-            return "error";
-        }
-
+    public String login(Model model) {
         return "login";
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
+
     @GetMapping("/")
-    public String welcome(Model model) {
+    public String welcome() {
         return "welcome";
     }
 
