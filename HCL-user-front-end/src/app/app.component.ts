@@ -7,7 +7,7 @@ import { TokenStorageService } from './_services/token-storage.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  title = 'college-front-end';
+  title = 'Cloud Price Predictor';
 
   private roles: string[];
   isLoggedIn = false;

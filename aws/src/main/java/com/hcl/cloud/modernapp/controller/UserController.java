@@ -23,8 +23,10 @@ public class UserController {
     @Autowired
     private Uservalidator userValidator;
 
+    @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping("/registration")
     public String registration(@RequestBody UserModel userForm) {
+        userValidator.validate(userForm, null);
 
         userService.save(userForm);
 
@@ -33,12 +35,10 @@ public class UserController {
         return "login";
     }
 
-
     @GetMapping("/login")
     public String login(Model model) {
         return "login";
     }
-
 
     @GetMapping("/")
     public String welcome() {
