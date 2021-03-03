@@ -1,16 +1,19 @@
 package com.hcl.cloud.modernapp.model;
 
+import javax.persistence.*;
 
+@Entity
+@Table(name = "user")
 public class UserModel {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String username;
     private String password;
 
-    private String passwordConfirm;
-
-   public Long getId() {
+    public Long getId() {
         return id;
     }
 
@@ -33,13 +36,4 @@ public class UserModel {
     public void setPassword(String password) {
         this.password = password;
     }
-
-    public String getPasswordConfirm() {
-        return passwordConfirm;
-    }
-
-    public void setPasswordConfirm(String passwordConfirm) {
-        this.passwordConfirm = passwordConfirm;
-    }
-
 }

@@ -6,6 +6,7 @@ import com.hcl.cloud.modernapp.services.UserSecurityService;
 import com.hcl.cloud.modernapp.services.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -24,13 +25,16 @@ public class UserController {
     private Uservalidator userValidator;
 
     @CrossOrigin(origins = "http://localhost:4200")
+    @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     @PostMapping("/registration")
-    public String registration(@RequestBody UserModel userForm) {
-        userValidator.validate(userForm, null);
-
-        userService.save(userForm);
-
-        securityService.autoLogin(userForm.getUsername(), userForm.getPasswordConfirm());
+    public String registration(@RequestParam(required = false, defaultValue = "World") String name) {
+        System.out.println("This is the debugging code: " + name);
+        userValidator.validate(name, null);
+//        userValidator.validate(userForm, null);
+//
+//        userService.save(userForm);
+//
+//        securityService.autoLogin(userForm.getUsername(), userForm.getPassword());
 
         return "login";
     }
