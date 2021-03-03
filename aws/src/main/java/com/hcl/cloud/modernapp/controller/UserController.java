@@ -6,11 +6,14 @@ import com.hcl.cloud.modernapp.services.UserSecurityService;
 import com.hcl.cloud.modernapp.services.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @RestController
 public class UserController {
@@ -24,29 +27,61 @@ public class UserController {
     @Autowired
     private Uservalidator userValidator;
 
-    @CrossOrigin(origins = "http://localhost:4200")
-    @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-    @PostMapping("/registration")
-    public String registration(@RequestParam(required = false, defaultValue = "World") String name) {
-        System.out.println("This is the debugging code: " + name);
-        userValidator.validate(name, null);
-//        userValidator.validate(userForm, null);
-//
-//        userService.save(userForm);
-//
-//        securityService.autoLogin(userForm.getUsername(), userForm.getPassword());
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-        return "login";
+    @PostMapping(value = "/register", consumes = "application/json", produces = "application/json")
+    public ResponseEntity<UserModel> register(@RequestBody UserModel body, BindingResult bindingResult) {
+        userValidator.validate(body, bindingResult);
+
+        if (bindingResult.hasErrors()) {
+            System.out.println("something is wrong");
+            System.out.print(bindingResult);
+            return ResponseEntity.notFound().build();
+        }
+
+        userService.save(body);
+        System.out.println("username: " + body.getUsername() + "  password: " + body.getPassword());
+
+        return new ResponseEntity<>(body, HttpStatus.OK);
+        // userService.
+
+        // return new UserModel();
     }
 
-    @GetMapping("/login")
-    public String login(Model model) {
-        return "login";
+    @PostMapping(value = "/login", consumes = "application/json", produces = "application/json")
+    public ResponseEntity<UserModel> login(@RequestBody UserModel body) {
+
+        try {
+            UserModel model = userService.findByUsername(body.getUsername());
+            System.out.println(model.getPassword());
+            System.out.println(model.getUsername());
+            // Block of code to try
+            if (bCryptPasswordEncoder.matches(body.getPassword(), model.getPassword())) {
+                System.out.print("'correct'");
+                return new ResponseEntity<>(body, HttpStatus.OK);
+            }
+        } catch (Exception e) {
+            System.out.print("'incorrect'");
+            System.out.print(body);
+
+            return ResponseEntity.notFound().build();
+            // Block of code to handle errors
+        }
+        System.out.print("incorrect");
+        return null;
     }
 
     @GetMapping("/")
     public String welcome() {
-        return "welcome";
+        System.out.print("yo");
+        return "Welcome";
+    }
+
+    @PostMapping("/")
+    public String welcome(@RequestBody String nParam) {
+        System.out.print("'were getting anew message'" + nParam);
+        return nParam;
     }
 
     // @CrossOrigin(origins = "http://localhost:4200")

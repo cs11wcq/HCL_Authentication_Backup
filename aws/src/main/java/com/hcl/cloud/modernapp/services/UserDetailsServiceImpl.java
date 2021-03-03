@@ -15,10 +15,11 @@ import com.hcl.cloud.modernapp.Repo.UserRepo;
 import com.hcl.cloud.modernapp.model.UserModel;
 
 /*
-UserDetailsService interface is used in order to lookup the username, password and GrantedAuthorities 
-for any given user.
-This interface provide only one method which implementing class need to implement-loadUserByUsername()
-*/
+ * UserDetailsService interface is used in order to lookup the username,
+ * password and GrantedAuthorities for any given user. This interface provide
+ * only one method which implementing class need to
+ * implement-loadUserByUsername()
+ */
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
     @Autowired

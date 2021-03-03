@@ -14,15 +14,14 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    @Override
     public void save(UserModel user) {
         UserModel userEntity = new UserModel();
         userEntity.setUsername(user.getUsername());
+        // userEntity.setPassword(user.getPassword());
         userEntity.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         userRepo.save(userEntity);
     }
 
-    @Override
     public UserModel findByUsername(String username) {
         UserModel userEntity = userRepo.findByUsername(username);
         UserModel userModel = new UserModel();

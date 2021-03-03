@@ -10,8 +10,12 @@ public class UserModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false, unique = true)
     private String username;
+    @Column(nullable = false)
     private String password;
+    // @Column(nullable = false)
+    // private String passwordConfirm;
 
     public Long getId() {
         return id;
@@ -36,4 +40,12 @@ public class UserModel {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    // public String getPasswordConfirm() {
+    // return passwordConfirm;
+    // }
+
+    // public void setPasswordConfirm(String password) {
+    // this.passwordConfirm = password;
+    // }
 }

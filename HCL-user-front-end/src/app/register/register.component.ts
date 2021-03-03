@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../_services/auth.service';
-import { HttpClient } from '@angular/common/http'
+import { HttpClient, HttpHeaders } from '@angular/common/http'
 
 @Component({
   selector: 'app-register',
@@ -13,7 +13,7 @@ export class RegisterComponent implements OnInit {
   isSuccessful = false;
   isSignUpFailed = false;
   errorMessage = '';
-  private base_url = 'localhost:8080/registration'
+  private base_url = "http://localhost:8080/register"
 
   constructor(private authService: AuthService, private _http: HttpClient) { }
 
@@ -22,9 +22,12 @@ export class RegisterComponent implements OnInit {
 
   async onSubmit():Promise<void>{
     console.log(this.form)
-    const recv = await this._http.post<any>(this.base_url, JSON.stringify(this.form));
+    // console.log(await this._http.post<any>(this.base_url, JSON.stringify(this.form)));
 
-    console.log(recv)
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    this._http.post(this.base_url, this.form ,{ headers: headers
+    }).subscribe(response => { console.log(response);})
+
     // this.authService.register(this.form).subscribe(
     //   data =>{
     //     console.log(data);
