@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../_services/auth.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { environment } from './environment';
+import {environment} from "../../environments/environment";
+// import { environment } from './environment';
 
 @Component({
   selector: 'app-register',
