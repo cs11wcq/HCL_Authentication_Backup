@@ -2,7 +2,7 @@ package com.hcl.cloud.modernapp.controller;
 
 import com.hcl.cloud.modernapp.Validator.Uservalidator;
 import com.hcl.cloud.modernapp.model.UserModel;
-import com.hcl.cloud.modernapp.services.UserSecurityService;
+//import com.hcl.cloud.modernapp.services.UserSecurityService;
 import com.hcl.cloud.modernapp.services.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,8 +12,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
+import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 public class UserController {
@@ -21,8 +25,8 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private UserSecurityService securityService;
+//    @Autowired
+//    private UserSecurityService securityService;
 
     @Autowired
     private Uservalidator userValidator;
@@ -31,15 +35,19 @@ public class UserController {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @PostMapping(value = "/register", consumes = "application/json", produces = "application/json")
-    public ResponseEntity<UserModel> register(@RequestBody UserModel body, BindingResult bindingResult) {
+    public ResponseEntity<UserModel> register(@Valid @RequestBody UserModel body, BindingResult bindingResult) {
         userValidator.validate(body, bindingResult);
-
+//        List<ObjectError> errorList = bindingResult.getAllErrors();
+//        for (ObjectError error: errorList) {
+//            if (error.equals())
+//        }
         if (bindingResult.hasErrors()) {
             System.out.println("something is wrong");
             System.out.print(bindingResult);
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.badRequest().eTag(bindingResult.getAllErrors().toString()).build();
         }
-
+        //error handling for duplicate registration.
+        //appropriate status code to send back for duplicate entry invalid request
         userService.save(body);
         System.out.println("username: " + body.getUsername() + "  password: " + body.getPassword());
 
@@ -48,9 +56,8 @@ public class UserController {
 
         // return new UserModel();
     }
-
     @PostMapping(value = "/login", consumes = "application/json", produces = "application/json")
-    public ResponseEntity<UserModel> login(@RequestBody UserModel body) {
+    public ResponseEntity<UserModel> login(@Valid @RequestBody UserModel body) {
 
         try {
             UserModel model = userService.findByUsername(body.getUsername());
@@ -68,8 +75,8 @@ public class UserController {
             return ResponseEntity.notFound().build();
             // Block of code to handle errors
         }
-        System.out.print("incorrect");
-        return null;
+        System.out.print("INCORRECT");
+        return ResponseEntity.notFound().build();
     }
 
     @GetMapping("/")

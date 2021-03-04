@@ -12,3 +12,4 @@ import org.springframework.transaction.annotation.Transactional;
 public interface UserRepo extends JpaRepository<UserModel, Long> {
     public UserModel findByUsername(String username);
 }
+//change to UserEntity

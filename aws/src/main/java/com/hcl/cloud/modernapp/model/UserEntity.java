@@ -1,23 +1,17 @@
 package com.hcl.cloud.modernapp.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 
-@Entity
-@Table(name = "user")
-public class UserModel implements Serializable {
+//@Entity
+//@Table(name = "user")
+public class UserEntity implements Serializable {
 
-    @Id
-    @GeneratedValue
+
     private Long id;
 
-    @NotEmpty(message="{username.not.empty}")
     private String username;
-    @NotEmpty(message="{password.not.empty}")
     private String password;
     // @Column(nullable = false)
     // private String passwordConfirm;
