@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../_services/auth.service';
 import { TokenStorageService } from '../_services/token-storage.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http'
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -18,7 +19,7 @@ export class LoginComponent implements OnInit {
   private base_url = 'http://localhost:8080/login'
 
 
-  constructor(private authService: AuthService, private tokenStorage: TokenStorageService, private _http: HttpClient) { }
+  constructor(private authService: AuthService, private tokenStorage: TokenStorageService, private _http: HttpClient, private router: Router) { }
 
   ngOnInit(): void {
     if(this.tokenStorage.getToken()){
@@ -30,8 +31,16 @@ export class LoginComponent implements OnInit {
   async onSubmit():Promise<void>{
 
     let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    this._http.post(this.base_url, this.form ,{ headers: headers
-    }).subscribe(response => { console.log(response);})
+    this._http.post(this.base_url, this.form ,{ headers: headers}).subscribe(response => {
+        console.log(response);
+        this.isLoginFailed = false;
+        this.isLoggedIn = true;
+        // this.goToProfile();
+      },
+      err => {
+        this.isLoginFailed = true;
+      }
+    );
     // this.authService.login(this.form).subscribe(
     //   data => {
     //     this.tokenStorage.saveToken(data.accessToken);
@@ -49,6 +58,9 @@ export class LoginComponent implements OnInit {
     // );
   }
 
+  goToProfile(){
+    this.router.navigate(['/profile']);
+  }
   reloadPage(): void{
     window.location.reload();
   }

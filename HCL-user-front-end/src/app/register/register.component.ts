@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../_services/auth.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import {environment} from "../../environments/environment";
+import { environment } from '../../environments/environment';
+import { Router } from '@angular/router';
 // import { environment } from './environment';
 
 @Component({
@@ -17,7 +18,7 @@ export class RegisterComponent implements OnInit {
   errorMessage = '';
   private base_url = environment.awsUrl+"/register";
 
-  constructor(private authService: AuthService, private _http: HttpClient) { }
+  constructor(private authService: AuthService, private _http: HttpClient, private router: Router) { }
 
   ngOnInit(): void {
   }
@@ -28,7 +29,19 @@ export class RegisterComponent implements OnInit {
 
     let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     this._http.post(this.base_url, this.form ,{ headers: headers
-    }).subscribe(response => { console.log(response);})
+    }).subscribe(response => {
+        //check how to get http status code from the response in subscribe
+        console.log(response);
+        this.isSuccessful = true;
+        this.isSignUpFailed = false;
+
+        //this.goToLogin();
+      },
+      err => {
+        this.isSignUpFailed = true;
+        console.log(err);
+      }
+    );
 
     // this.authService.register(this.form).subscribe(
     //   data =>{
@@ -46,4 +59,7 @@ export class RegisterComponent implements OnInit {
     // )
   }
 
+  goToLogin(){
+    this.router.navigate(['/login'])
+  }
 }
