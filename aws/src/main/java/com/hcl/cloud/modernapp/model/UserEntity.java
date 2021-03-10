@@ -8,7 +8,8 @@ import java.io.Serializable;
 //@Table(name = "user")
 public class UserEntity implements Serializable {
 
-
+//    @Id
+//    @GeneratedValue
     private Long id;
 
     private String username;

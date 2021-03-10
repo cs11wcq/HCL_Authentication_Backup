@@ -1,5 +1,6 @@
 package com.hcl.cloud.modernapp.config;
 
+import com.hcl.cloud.modernapp.Validator.RedirectAuthenticationSuccessHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
@@ -37,11 +38,15 @@ public class WebSecurityCofig extends WebSecurityConfigurerAdapter {
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
+    @Autowired
+    private RedirectAuthenticationSuccessHandler authenticationSuccessHandler;
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
-        http.authorizeRequests().antMatchers("/**").permitAll();
+//        http.authorizeRequests().antMatchers("/**").permitAll();
+        http.authorizeRequests().antMatchers("/**").permitAll()
+            .and().formLogin().successHandler(authenticationSuccessHandler).loginPage("/login").permitAll();
+
     }
 
     @Bean

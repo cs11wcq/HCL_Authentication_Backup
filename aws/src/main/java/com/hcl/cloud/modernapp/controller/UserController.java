@@ -1,6 +1,7 @@
 package com.hcl.cloud.modernapp.controller;
 
 import com.hcl.cloud.modernapp.Validator.Uservalidator;
+import com.hcl.cloud.modernapp.model.UIResponse;
 import com.hcl.cloud.modernapp.model.UserModel;
 //import com.hcl.cloud.modernapp.services.UserSecurityService;
 import com.hcl.cloud.modernapp.services.UserService;
@@ -35,27 +36,35 @@ public class UserController {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @PostMapping(value = "/register", consumes = "application/json", produces = "application/json")
-    public ResponseEntity<UserModel> register(@Valid @RequestBody UserModel body, BindingResult bindingResult) {
+    public UIResponse register(@Valid @RequestBody UserModel body, BindingResult bindingResult) {
         userValidator.validate(body, bindingResult);
 //        List<ObjectError> errorList = bindingResult.getAllErrors();
 //        for (ObjectError error: errorList) {
 //            if (error.equals())
 //        }
+
+        UIResponse response = new UIResponse();
         if (bindingResult.hasErrors()) {
             System.out.println("something is wrong");
             System.out.print(bindingResult);
-            return ResponseEntity.badRequest().eTag(bindingResult.getAllErrors().toString()).build();
+            response.setStatusCode(400);
+            response.setStatusDescription("Invalid request: " + bindingResult.getAllErrors().toString());
+//            return ResponseEntity.badRequest().eTag(bindingResult.getAllErrors().toString()).build();
         }
-        //error handling for duplicate registration.
-        //appropriate status code to send back for duplicate entry invalid request
-        userService.save(body);
-        System.out.println("username: " + body.getUsername() + "  password: " + body.getPassword());
+        else {
+            //error handling for duplicate registration.
+            //appropriate status code to send back for duplicate entry invalid request
+            userService.save(body);
+            System.out.println("username: " + body.getUsername() + "  password: " + body.getPassword());
 
-        return new ResponseEntity<>(body, HttpStatus.OK);
-        // userService.
+            response.setStatusCode(200);
+            response.setStatusDescription("You registered successfully!");
+        }
 
-        // return new UserModel();
+        return response;
     }
+
+
     @PostMapping(value = "/login", consumes = "application/json", produces = "application/json")
     public ResponseEntity<UserModel> login(@Valid @RequestBody UserModel body) {
 
