@@ -28,7 +28,7 @@ import java.util.Locale;
 
 @Configuration
 @EnableWebSecurity
-@Import(ModernAppConfig.class)
+//@Import(ModernAppConfig.class)
 public class WebSecurityCofig extends WebSecurityConfigurerAdapter {
 
     @Autowired
@@ -43,9 +43,9 @@ public class WebSecurityCofig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
-//        http.authorizeRequests().antMatchers("/**").permitAll();
-        http.authorizeRequests().antMatchers("/**").permitAll()
-            .and().formLogin().successHandler(authenticationSuccessHandler).loginPage("/login").permitAll();
+        http.authorizeRequests().antMatchers("/**").permitAll();
+//        http.authorizeRequests().antMatchers("/**").permitAll()
+//            .and().formLogin().successHandler(authenticationSuccessHandler).loginPage("/login").permitAll();
 
     }
 

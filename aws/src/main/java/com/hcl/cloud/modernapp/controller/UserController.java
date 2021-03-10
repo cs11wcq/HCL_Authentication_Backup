@@ -85,15 +85,20 @@ public class UserController {
                 return new ResponseEntity<>(body, HttpStatus.OK);
             }
         } catch (Exception e) {
-            System.out.print("'incorrect'");
+            System.out.print("'Invalid username'");
             System.out.print(body);
 
             return ResponseEntity.notFound().build();
             // Block of code to handle errors
         }
-        System.out.print("INCORRECT");
+        System.out.print("valid username, but invalid password");
         return ResponseEntity.notFound().build();
     }
+
+//    @GetMapping(value = "/login", consumes = "application/json", produces = "application/json")
+//    public UIResponse login(@Valid @RequestBody UserModel user) {
+//
+//    }
 
     @GetMapping("/")
     public String welcome() {
