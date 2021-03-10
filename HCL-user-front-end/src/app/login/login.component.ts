@@ -3,6 +3,7 @@ import { AuthService } from '../_services/auth.service';
 import { TokenStorageService } from '../_services/token-storage.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http'
 import { Router } from '@angular/router';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +17,7 @@ export class LoginComponent implements OnInit {
   isLoginFailed = false;
   errorMessage = '';
   roles: string[] = [];
-  // private base_url = 'http://localhost:8080/login'
+  private base_url = environment.awsUrl+"/login";
 
 
   constructor(private authService: AuthService, private tokenStorage: TokenStorageService, private _http: HttpClient, private router: Router) { }
