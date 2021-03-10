@@ -16,7 +16,7 @@ export class LoginComponent implements OnInit {
   isLoginFailed = false;
   errorMessage = '';
   roles: string[] = [];
-  private base_url = 'http://localhost:8080/login'
+  // private base_url = 'http://localhost:8080/login'
 
 
   constructor(private authService: AuthService, private tokenStorage: TokenStorageService, private _http: HttpClient, private router: Router) { }
