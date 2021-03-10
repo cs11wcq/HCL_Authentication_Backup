@@ -16,6 +16,9 @@ export class RegisterComponent implements OnInit {
   isSuccessful = false;
   isSignUpFailed = false;
   errorMessage = '';
+  errorCode = '';
+  successMessage = '';
+  successCode = '';
   private base_url = environment.awsUrl+"/register";
 
   constructor(private authService: AuthService, private _http: HttpClient, private router: Router) { }
@@ -32,13 +35,25 @@ export class RegisterComponent implements OnInit {
     }).subscribe(response => {
         //check how to get http status code from the response in subscribe
         console.log(response);
-        this.isSuccessful = true;
-        this.isSignUpFailed = false;
+        if(response["statusCode"] === 200){
+          this.isSuccessful = true;
+          this.isSignUpFailed = false;
+          this.successMessage = response["statusDescription"];
+          this.successCode = response["statusCode"];
+        }
+        else {
+          this.isSignUpFailed = true;
+          this.errorMessage = response["statusDescription"];
+          this.errorCode = response["statusCode"];
+          console.log(response["statusCode"]);
+        }
 
         //this.goToLogin();
       },
       err => {
         this.isSignUpFailed = true;
+        this.errorMessage = err["statusDescription"];
+          console.log(err["statusCode"]);
         console.log(err);
       }
     );

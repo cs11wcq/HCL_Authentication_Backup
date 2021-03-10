@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -48,8 +49,14 @@ public class UserController {
             System.out.println("something is wrong");
             System.out.print(bindingResult);
             response.setStatusCode(400);
-            response.setStatusDescription("Invalid request: " + bindingResult.getAllErrors().toString());
+            // response.setStatusDescription("Invalid request: " + bindingResult.getAllErrors().toString());
 //            return ResponseEntity.badRequest().eTag(bindingResult.getAllErrors().toString()).build();
+            List<ObjectError> errors = bindingResult.getAllErrors();
+            StringBuffer sb = new StringBuffer();
+            for (ObjectError error : errors ) {
+                sb.append(error.getDefaultMessage());
+            }
+            response.setStatusDescription(sb.toString());
         }
         else {
             //error handling for duplicate registration.

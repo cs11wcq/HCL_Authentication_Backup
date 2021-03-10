@@ -12,6 +12,7 @@ export class RegisterService {
 
   register()
   {
-    this._http.post<any>(this.base_url, '')
+    console.log("base_url", this.base_url);
+    this._http.post<any>(this.base_url, '');
   }
 }
