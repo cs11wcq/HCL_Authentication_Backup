@@ -73,26 +73,33 @@ public class UserController {
 
 
     @PostMapping(value = "/login", consumes = "application/json", produces = "application/json")
-    public ResponseEntity<UserModel> login(@Valid @RequestBody UserModel body) {
-
+    public UIResponse login(@Valid @RequestBody UserModel body) {
+        UIResponse response = new UIResponse();
         try {
             UserModel model = userService.findByUsername(body.getUsername());
             System.out.println(model.getPassword());
             System.out.println(model.getUsername());
-            // Block of code to try
+            // raw password vs encoded one
             if (bCryptPasswordEncoder.matches(body.getPassword(), model.getPassword())) {
                 System.out.print("'correct'");
-                return new ResponseEntity<>(body, HttpStatus.OK);
+                response.setStatusCode(200);
+                response.setStatusDescription("You logged in successfully!");
+                return response;
             }
         } catch (Exception e) {
             System.out.print("'Invalid username'");
             System.out.print(body);
 
-            return ResponseEntity.notFound().build();
+            response.setStatusCode(404); //not found
+            response.setStatusDescription("Invalid username");
+
+            return response;
             // Block of code to handle errors
         }
         System.out.print("valid username, but invalid password");
-        return ResponseEntity.notFound().build();
+        response.setStatusCode(401); //unauthorized
+        response.setStatusDescription("Your password is incorrect");
+        return response;
     }
 
 //    @GetMapping(value = "/login", consumes = "application/json", produces = "application/json")

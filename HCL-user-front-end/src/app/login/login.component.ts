@@ -16,6 +16,10 @@ export class LoginComponent implements OnInit {
   isLoggedIn = false;
   isLoginFailed = false;
   errorMessage = '';
+  errorCode = '';
+  successMessage = '';
+  successCode = '';
+
   roles: string[] = [];
   private base_url = environment.awsUrl+"/login";
 
@@ -34,8 +38,22 @@ export class LoginComponent implements OnInit {
     let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     this._http.post(this.base_url, this.form ,{ headers: headers}).subscribe(response => {
         console.log(response);
-        this.isLoginFailed = false;
-        this.isLoggedIn = true;
+
+        if(response["statusCode"] === 200){
+          this.isLoginFailed = false;
+          this.isLoggedIn = true;
+          this.successMessage = response["statusDescription"];
+          this.successCode = response["statusCode"];
+        }
+        else {
+          this.isLoginFailed = true;
+          this.isLoggedIn = false;
+
+          this.errorMessage = response["statusDescription"];
+          this.errorCode = response["statusCode"];
+          console.log(response["statusCode"]);
+        }
+
         // this.goToProfile();
       },
       err => {

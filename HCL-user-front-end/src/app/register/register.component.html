@@ -89,12 +89,14 @@
       </div>
 
       <div class="alert alert-warning" *ngIf="f.submitted && isSignUpFailed">
-        Signup failed!<br />The error code is {{errorCode}}: The error description is {{ errorMessage }}
+        Signup failed!<br />The error code is {{errorCode}}
+        <br/>
+        The error description is: {{ errorMessage }}
       </div>
     </form>
 
     <div class="alert alert-success" *ngIf="isSuccessful">
-      <br />The success code is {{successCode}}: The success description is {{ successMessage }}
+      <br />The success code is {{successCode}}: The success description is: {{ successMessage }}
     </div>
   </div>
 </div>
