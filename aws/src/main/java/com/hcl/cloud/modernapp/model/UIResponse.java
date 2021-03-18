@@ -3,6 +3,7 @@ package com.hcl.cloud.modernapp.model;
 public class UIResponse {
     private String statusDescription;
     private Integer statusCode;
+    private String token;
     public UIResponse() {
 
     }
@@ -20,5 +21,11 @@ public class UIResponse {
 
     public void setStatusCode(Integer statusCode) {
         this.statusCode = statusCode;
+    }
+
+    public String getToken() {return token;}
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }

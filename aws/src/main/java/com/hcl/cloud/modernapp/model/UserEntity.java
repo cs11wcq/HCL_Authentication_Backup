@@ -7,23 +7,8 @@ import java.io.Serializable;
 //@Entity
 //@Table(name = "user")
 public class UserEntity implements Serializable {
-
-//    @Id
-//    @GeneratedValue
-    private Long id;
-
     private String username;
     private String password;
-    // @Column(nullable = false)
-    // private String passwordConfirm;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getUsername() {
         return username;
@@ -40,12 +25,4 @@ public class UserEntity implements Serializable {
     public void setPassword(String password) {
         this.password = password;
     }
-
-    // public String getPasswordConfirm() {
-    // return passwordConfirm;
-    // }
-
-    // public void setPasswordConfirm(String password) {
-    // this.passwordConfirm = password;
-    // }
 }

@@ -1,9 +1,11 @@
 package com.hcl.cloud.modernapp.Validator;
 
+import com.hcl.cloud.modernapp.model.UserEntity;
 import com.hcl.cloud.modernapp.model.UserModel;
-import com.hcl.cloud.modernapp.services.UserService;
 
+import com.hcl.cloud.modernapp.services.JwtUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
@@ -16,7 +18,7 @@ import org.springframework.validation.Validator;
 public class Uservalidator implements Validator {
 
     @Autowired
-    private UserService userService;
+    private JwtUserDetailsService userService;
 
     @Override
     public boolean supports(Class<?> aClass) {
@@ -28,8 +30,8 @@ public class Uservalidator implements Validator {
      */
     @Override
     public void validate(Object o, Errors errors) {
-        UserModel inputUser = (UserModel) o; //from whatever is typed in
-        UserModel user = userService.findByUsername(inputUser.getUsername()); //user from the database
+        UserEntity inputUser = (UserEntity) o; //from whatever is typed in
+        UserDetails user = userService.loadUserByUsername(inputUser.getUsername()); //user from the database
         if (user != null) {
             //if the username already exists
             //Since I am using a Rest, I want to capture the error event and send back an appropriate response to my front end.

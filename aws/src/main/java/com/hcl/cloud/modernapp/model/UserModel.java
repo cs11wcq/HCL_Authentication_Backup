@@ -1,9 +1,6 @@
 package com.hcl.cloud.modernapp.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 
@@ -15,6 +12,7 @@ public class UserModel implements Serializable {
     @GeneratedValue
     private Long id;
 
+    @Column(unique = true)
     @NotEmpty(message="{username.not.empty}")
     private String username;
     @NotEmpty(message="{password.not.empty}")
